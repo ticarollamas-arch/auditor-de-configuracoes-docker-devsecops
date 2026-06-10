@@ -1,0 +1,36 @@
+{
+  "rules": [
+    {
+      "id": "DF-001",
+      "title": "Uso da tag 'latest' ou ausência de tag na imagem base",
+      "severity": "MEDIUM",
+      "cvss": 5.3,
+      "description": "Imagens base devem utilizar tags específicas e imutáveis (ex: hashes SHA ou versões específicas) para garantir reprodutibilidade e evitar a introdução de vulnerabilidades não testadas.",
+      "remediation": "Substitua a tag 'latest' por uma tag de versão específica ou digest SHA256 no comando FROM."
+    },
+    {
+      "id": "DF-002",
+      "title": "Contêiner executando como ROOT",
+      "severity": "HIGH",
+      "cvss": 8.1,
+      "description": "Por padrão, o Docker executa processos como root dentro do contêiner. Se um invasor conseguir escapar do contêiner, ele terá privilégios de root no host.",
+      "remediation": "Adicione a instrução 'USER' especificando um usuário não-root criado previamente no Dockerfile."
+    },
+    {
+      "id": "DF-003",
+      "title": "Exposição de porta de gerenciamento perigosa",
+      "severity": "CRITICAL",
+      "cvss": 9.8,
+      "description": "Portas de serviços administrativos ou de depuração (como SSH 22, RDP 3389, Docker Daemon 2375) não devem ser expostas diretamente no Dockerfile.",
+      "remediation": "Remova a instrução EXPOSE para portas administrativas. Utilize túneis seguros ou redes internas se o acesso for estritamente necessário."
+    },
+    {
+      "id": "DF-004",
+      "title": "Ausência de instrução HEALTHCHECK",
+      "severity": "LOW",
+      "cvss": 3.2,
+      "description": "A instrução HEALTHCHECK permite que o Docker verifique se o processo interno do contêiner está realmente funcional, não apenas em execução.",
+      "remediation": "Adicione uma instrução HEALTHCHECK apropriada para o serviço exposto."
+    }
+  ]
+}
