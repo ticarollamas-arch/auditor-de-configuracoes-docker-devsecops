@@ -1,0 +1,36 @@
+{
+  "rules": [
+    {
+      "id": "DC-001",
+      "title": "Contêiner executando em modo Privilegiado",
+      "severity": "CRITICAL",
+      "cvss": 9.1,
+      "description": "A opção 'privileged: true' concede ao contêiner todas as capacidades do host, permitindo acesso direto ao hardware e anulando as barreiras de isolamento do Docker.",
+      "remediation": "Remova a diretiva 'privileged: true' e utilize a diretiva 'cap_add' para conceder apenas as capacidades estritamente necessárias."
+    },
+    {
+      "id": "DC-002",
+      "title": "Compartilhamento do Namespace de Rede do Host",
+      "severity": "HIGH",
+      "cvss": 7.4,
+      "description": "Configurar 'network_mode: host' expõe o contêiner diretamente à rede do host, permitindo que ele manipule interfaces de rede locais e intercepte tráfego de outros contêineres.",
+      "remediation": "Remova 'network_mode: host' e utilize redes isoladas do tipo bridge criadas pelo próprio Docker Compose."
+    },
+    {
+      "id": "DC-003",
+      "title": "Montagem do Socket do Docker dentro do Contêiner",
+      "severity": "CRITICAL",
+      "cvss": 9.0,
+      "description": "Montar o socket do Docker (/var/run/docker.sock) permite que o contêiner envie comandos diretamente para o daemon do Docker do host, resultando em controle total sobre a máquina hospedeira.",
+      "remediation": "Evite montar o socket do Docker. Se necessário para CI/CD, utilize agentes isolados ou ferramentas que não requeiram acesso ao daemon."
+    },
+    {
+      "id": "DC-004",
+      "title": "Ausência de limite de recursos de CPU ou Memória",
+      "severity": "LOW",
+      "cvss": 3.5,
+      "description": "A falta de limites de recursos permite que um único contêiner consuma toda a memória ou CPU do host, facilitando ataques de negação de serviço (DoS) acidentais ou maliciosos.",
+      "remediation": "Defina limites de recursos sob as chaves 'deploy.resources.limits' ou 'mem_limit' e 'cpus'."
+    }
+  ]
+}
